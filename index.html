@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>افق کوروش | شعبه مدرس بناب</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Tahoma, sans-serif;
+        }
+        body {
+            background: #f4f5f7;
+            color: #1c1c22;
+            line-height: 1.65;
+        }
+        /* صفحه ورود */
+        .login-page {
+            min-height: 100vh;
+            background: #1e1e24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-card {
+            width: 100%;
+            max-width: 380px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 25px 20px;
+            border-top: 6px solid #ffcc00;
+            text-align: center;
+        }
+        .ok-logo {
+            display: inline-block;
+            background: #e30613;
+            color: #ffcc00;
+            font-weight: 900;
+            font-size: 1.4rem;
+            padding: 6px 16px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .login-card h2 {
+            font-size: 1.15rem;
+            margin-bottom: 5px;
+        }
+        .login-card p {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .input-label {
+            display: block;
+            text-align: right;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .pass-box {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        .pass-box:focus {
+            border-color: #e30613;
+        }
+        .submit-btn {
+            width: 100%;
+            background: #e30613;
+            color: #ffffff;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .error-text {
+            display: none;
+            margin-top: 12px;
+            background: #ffe6e8;
+            color: #c9182b;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: bold;
+        }
+        .dev-sign {
+            margin-top: 18px;
+            padding-top: 12px;
+            border-top: 1px dashed #ddd;
+            font-size: 0.78rem;
+            color: #666;
+        }
+        .dev-sign a, .dev-link {
+            color: #e30613;
+            font-weight: bold;
+            text-decoration: none;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* پنل اصلی */
+        .panel-page {
+            display: none;
+        }
+        .header {
+            background: #e30613;
+            color: #fff;
+            padding: 12px 15px;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-badge {
+            background: #ffcc00;
+            color: #e30613;
+            font-weight: 900;
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+        .header-title h1 {
+            font-size: 0.95rem;
+        }
+        .header-title span {
+            font-size: 0.7rem;
+            color: #ffcc00;
+            display: block;
+        }
+        .header-nav {
+            display: flex;
+            gap: 5px;
+        }
+        .nav-btn {
+            background: #ffcc00;
+            color: #1c1c22;
+            padding: 5px 8px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        .nav-white {
+            background: #fff;
+            color: #e30613;
+        }
+        .nav-exit {
+            background: #1c1c22;
+            color: #fff;
+        }
+        .banner {
+            background: #b0000a;
+            color: #fff;
+            padding: 25px 15px 42px;
+            text-align: center;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+        }
+        .banner h2 {
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+        }
+        .banner p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+        .info-card {
+            background: #fff;
+            margin: -25px 15px 20px;
+            padding: 16px;
+            border-radius: 16px;
+            border-top: 4px solid #ffcc00;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .info-item {
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed #eee;
+        }
+        .info-item:last-child {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        .info-item small {
+            display: block;
+            color: #777;
+            font-size: 0.75rem;
+        }
+        .sec-title {
+            padding: 0 15px;
+            margin: 20px 0 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sec-title h3 {
+            font-size: 1.05rem;
+            border-right: 4px solid #e30613;
+            padding-right: 8px;
+        }
+        .guide-box {
+            margin: 0 15px 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 16px;
+            border-right: 4px solid #ffcc00;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .guide-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #f0f0f0;
+            font-size: 0.84rem;
+            font-weight: bold;
+        }
+        .guide-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .num-badge {
+            background: #e30613;
+            color: #ffcc00;
+            min-width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 900;
+        }
+        .chinish-box {
+            margin: 15px;
+            background: #1c1c22;
+            color: #fff;
+            padding: 20px 16px;
+            border-radius: 18px;
+            border: 1px solid #ffcc00;
+        }
+        .chinish-box h3 {
+            color: #ffcc00;
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+        .chinish-box p {
+            font-size: 0.82rem;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+        .chinish-link {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: #ffcc00;
+            color: #1c1c22;
+            text-decoration: none;
+            font-weight: 900;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+        }
+        .list-container {
+            padding: 0 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .list-row {
+            background: #fff;
+            padding: 10px 12px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e6e6e6;
+        }
+        .list-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .idx-badge {
+            background: #ffe6e8;
+            color: #e30613;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 900;
+        }
+        .copy-button {
+            background: #f1f3f5;
+            color: #1c1c22;
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .copy-button.copied {
+            background: #198754;
+            color: #fff;
+            border-color: #198754;
+        }
+        .footer {
+            margin-top: 30px;
+            background: #fff;
+            padding: 20px 15px;
+            text-align: center;
+            border-top: 1px solid #e6e6e6;
+        }
+        .dev-pill {
+            display: inline-block;
+            background: #f1f3f5;
+            padding: 6px 14px;
+            border-radius: 50px;
+            margin-top: 8px;
+            font-size: 0.82rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- بخش ورود -->
+    <div id="loginBox" class="login-page">
+        <div class="login-card">
+            <div class="ok-logo">OK</div>
+            <h2>ورود به پنل شعبه مدرس بناب</h2>
+            <p>افق کوروش — دسترسی کاربران مجاز</p>
+
+            <label class="input-label" for="userPass">نام رمز ورود:</label>
+            <input type="text" id="userPass" class="pass-box" placeholder="نام رمز را وارد کنید...">
+
+            <button type="button" class="submit-btn" onclick="checkUser()">ورود به پنل</button>
+
+            <div id="errAlert" class="error-text">نام واردشده مجاز نیست! پنل باز نمی‌شود.</div>
+
+            <div class="dev-sign">
+                طراح و برنامه‌نویس: <a href="https://t.me/mahdi_shokrian" target="_blank">@mahdi_shokrian</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- بخش پنل اصلی -->
+    <div id="panelBox" class="panel-page">
+        <div class="header">
+            <div class="header-brand">
+                <div class="header-badge">OK</div>
+                <div class="header-title">
+                    <h1>افق کوروش</h1>
+                    <span>شعبه مدرس بناب</span>
+                </div>
+            </div>
+            <div class="header-nav">
+                <a href="#guidePart" class="nav-btn nav-white">آموزش</a>
+                <a href="#listPart" class="nav-btn nav-white">لیست</a>
+                <a href="#chinishPart" class="nav-btn">چینش</a>
+                <button type="button" class="nav-btn nav-exit" onclick="exitPanel()">خروج</button>
+            </div>
+        </div>
+
+        <div class="banner">
+            <h2>پنل مدیریت و چیدمان شعبه</h2>
+            <p>فروشگاه‌های زنجیره‌ای افق کوروش — شعبه مدرس بناب</p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-item">
+                <small>مدیریت شعبه</small>
+                <strong>جناب آقای مهدی یزدانی</strong>
+            </div>
+            <div class="info-item">
+                <small>آدرس شعبه</small>
+                <strong>بناب، شعبه مدرس</strong>
+            </div>
+        </div>
+
+        <div id="guidePart" class="sec-title">
+            <h3>آموزش استفاده</h3>
+            <span style="font-size:0.75rem;color:#666;">۵ مرحله</span>
+        </div>
+
+        <div class="guide-box">
+            <div class="guide-row">
+                <span class="num-badge">1</span>
+                <span>از قفسه مورد نظر عکس بگیرید.</span>
+            </div>
+            <div class="guide-row">
+                <span class="num-badge">2</span>
+                <span>از لیست چینش، طرح دلخواه را کپی کنید.</span>
+            </div>
+            <div class="guide-row">
+                <span class="num-badge">3</span>
+                <span>روی بخش «چینش» بزنید و وارد شوید.</span>
+            </div>
+            <div class="guide-row">
+                <span class="num-badge">4</span>
+                <span>در کادر پایین، طرح را پیست کرده و آخرش عبارت «ایجاد تصویر» بنویسید.</span>
+            </div>
+            <div class="guide-row">
+                <span class="num-badge">5</span>
+                <span>کنار چت روی «+» بزنید، عکس را انتخاب کنید و بفرستید.</span>
+            </div>
+        </div>
+
+        <div id="chinishPart" class="chinish-box">
+            <h3>چینش</h3>
+            <p>اتصال مستقیم به سامانه چیدمان و پلنوگرام شعبه مدرس بناب.</p>
+            <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" class="chinish-link">ورود به چینش</a>
+        </div>
+
+        <div id="listPart" class="sec-title">
+            <h3>لیست چینش</h3>
+            <span style="font-size:0.75rem;color:#666;">۱۶ مورد</span>
+        </div>
+
+        <div class="list-container">
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">1</span><span>چیدمان بلوکی</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان بلوکی')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">2</span><span>چیدمان عمودی</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان عمودی')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">3</span><span>چیدمان افقی</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان افقی')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">4</span><span>چیدمان هم‌سطح‌سازی یا فِیسینگ</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان هم‌سطح‌سازی یا فِیسینگ')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">5</span><span>چیدمان رنگین‌کمانی یا طیف رنگی</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان رنگین‌کمانی یا طیف رنگی')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">6</span><span>چیدمان هرمی یا نقطه‌ای</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان هرمی یا نقطه‌ای')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">7</span><span>چیدمان دیسپلی بوتیکی</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان دیسپلی بوتیکی')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">8</span><span>چیدمان مینیمال یا تک‌محصولی</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان مینیمال یا تک‌محصولی')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">9</span><span>چیدمان متقاطع یا مکمل</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان متقاطع یا مکمل')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">10</span><span>چیدمان بر اساس سطح چشم</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان بر اساس سطح چشم')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">11</span><span>چیدمان انبوه یا فله‌ای</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان انبوه یا فله‌ای')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">12</span><span>چیدمان سرلاین</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان سرلاین')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">13</span><span>چیدمان صندوق یا خرید هیجانی</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان صندوق یا خرید هیجانی')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">14</span><span>چیدمان شبکه‌ای</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان شبکه‌ای')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">15</span><span>چیدمان پیست یا حلقه‌ای</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان پیست یا حلقه‌ای')">کپی</button>
+            </div>
+            <div class="list-row">
+                <div class="list-label"><span class="idx-badge">16</span><span>چیدمان آزاد</span></div>
+                <button type="button" class="copy-button" onclick="doCopy(this, 'چیدمان آزاد')">کپی</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p style="font-size:0.82rem;color:#666;">افق کوروش — بناب، شعبه مدرس | مدیریت: آقای مهدی یزدانی</p>
+            <div class="dev-pill">
+                <span>طراح و برنامه‌نویس: </span>
+                <a href="https://t.me/mahdi_shokrian" target="_blank" class="dev-link">@mahdi_shokrian</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkUser() {
+            var input = document.getElementById("userPass").value.trim();
+            input = input.replace(/ي/g, "ی").replace(/ك/g, "ک");
+
+            if (input === "شکریان" || input === "یزدانی" || input === "قاسمی آذر" || input === "شریعتی") {
+                document.getElementById("errAlert").style.display = "none";
+                document.getElementById("loginBox").style.display = "none";
+                document.getElementById("panelBox").style.display = "block";
+            } else {
+                document.getElementById("errAlert").style.display = "block";
+            }
+        }
+
+        function exitPanel() {
+            document.getElementById("userPass").value = "";
+            document.getElementById("errAlert").style.display = "none";
+            document.getElementById("panelBox").style.display = "none";
+            document.getElementById("loginBox").style.display = "flex";
+        }
+
+        function doCopy(btn, text) {
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.left = "-9999px";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+
+            btn.className = "copy-button copied";
+            btn.innerText = "کپی شد!";
+            setTimeout(function() {
+                btn.className = "copy-button";
+                btn.innerText = "کپی";
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
